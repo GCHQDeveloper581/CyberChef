@@ -156,7 +156,7 @@ class GenerateImage extends Operation {
 
         try {
             const imageBuffer = await image.getBufferAsync(Jimp.MIME_PNG);
-            return imageBuffer.buffer;
+            return imageBuffer.buffer.slice(imageBuffer.byteOffset, imageBuffer.byteLength + imageBuffer.byteOffset);
         } catch (err) {
             throw new OperationError(`Error generating image. (${err})`);
         }
