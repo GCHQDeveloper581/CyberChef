@@ -1,0 +1,31 @@
+on:
+  workflow_run:
+     workflows:
+       - releases
+     types:
+      - completed
+
+jobs:
+  main:
+    permissions:
+      id-token: write
+      packages: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set node version
+        uses: actions/setup-node@v6
+        with:
+          node-version: ^20.17.0
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install
+        run: |
+          export DETECT_CHROMEDRIVER_VERSION=true
+          npm ci
+          npm run setheapsize
+
+      - name: Publish to NPM
+        run: npm publish
