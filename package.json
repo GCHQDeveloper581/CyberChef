@@ -64,7 +64,7 @@
     "cspell": "^8.19.4",
     "css-loader": "7.1.4",
     "eslint": "^9.39.3",
-    "eslint-plugin-jsdoc": "^48.11.0",
+    "eslint-plugin-jsdoc": "^50.8.0",
     "globals": "^15.15.0",
     "grunt": "^1.6.1",
     "grunt-chmod": "~1.1.1",
