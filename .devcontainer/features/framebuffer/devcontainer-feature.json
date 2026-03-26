@@ -1,0 +1,10 @@
+{
+  "id": "framebuffer",
+  "version": "1.0.0",
+  "name": "Xvfb framebuffer",
+  "options": {
+  },
+	"installsAfter": [
+      "ghcr.io/devcontainers/features/common-utils"
+  ]
+}
