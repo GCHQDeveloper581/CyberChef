@@ -45,6 +45,12 @@ jobs:
           path: build/prod/*.zip
           retention-days: 5
 
+      - name: Setup Chrome
+        if: success()
+        uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2.1.2
+        with:
+          chrome-version: 148
+
       - name: UI Tests
         if: success()
         run: |

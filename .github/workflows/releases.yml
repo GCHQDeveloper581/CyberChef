@@ -46,6 +46,12 @@ jobs:
       - name: Production Build
         run: npx grunt prod
 
+      - name: Setup Chrome
+        if: success()
+        uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2.1.2
+        with:
+          chrome-version: 148
+
       - name: UI Tests
         run: |
           sudo apt-get install xvfb
