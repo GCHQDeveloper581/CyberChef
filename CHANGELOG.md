@@ -13,6 +13,25 @@ All major and minor version changes will be documented in this file. Details of 
 
 ## Details
 
+### [11.1.0] - 2026-05-14
+- Build docker container for arm v7 as well [@GCHQDeveloper581] | [#2379]
+- chore (deps): bump fast-uri from 3.1.0 to 3.1.2  | [#2372]
+- update bcryptjs [@C85297] [@GCHQDeveloper581] | [#2368]
+- chore (deps): bump picomatch from 2.3.1 to 2.3.2  | [#2370]
+- chore (deps): bump ip-address from 10.1.0 to 10.2.0  | [#2371]
+- chore (deps): bump axios from 1.15.0 to 1.16.0  | [#2369]
+- feat(operation-wrap): add new Wrap operation to format text at specified line width [@0xff1ce] | [#1882]
+- chore (deps): bump the patch-updates group across 1 directory with 5 updates  | [#2354]
+- chore (deps): bump docker/login-action from 3 to 4  | [#2363]
+- chore (deps): bump docker/setup-buildx-action from 3 to 4  | [#2364]
+- chore (deps): bump crazy-max/ghaction-github-pages from 3 to 5  | [#2365]
+- chore (deps): bump docker/metadata-action from 4 to 6  | [#2366]
+- chore (deps): bump docker/setup-qemu-action from 3 to 4  | [#2367]
+- Update dependabot for Node 24. [@GCHQDeveloper581] | [#2361]
+- chore (deps): bump uuid from 13.0.0 to 14.0.0  | [#2332]
+- chore (deps): bump webpack-bundle-analyzer from 5.2.0 to 5.3.0  | [#2353]
+- Fix all zeros after 16384 bytes with Blake3 [@zachbowden] [@GCHQDeveloper581] | [#2351]
+
 ## [11.0.0] - 2026-04-28
 - Revert sitemap to v8.0.X to fix build/deploy on master [@GCHQDeveloper581] | [#2348]
 - Node version update from 22 to 24 [@lzandman] [@GCHQDeveloper581] | [#2347]
@@ -638,6 +657,7 @@ Breaking changes:
 ## [4.0.0] - 2016-11-28
 -  Initial open source commit [@n1474335] | [b1d73a72](https://github.com/gchq/CyberChef/commit/b1d73a725dc7ab9fb7eb789296efd2b7e4b08306)
 
+[11.1.0]: https://github.com/gchq/CyberChef/releases/tag/v11.1.0
 [11.0.0]: https://github.com/gchq/CyberChef/releases/tag/v11.0.0
 [10.24.0]: https://github.com/gchq/CyberChef/releases/tag/v10.24.0
 [10.23.0]: https://github.com/gchq/CyberChef/releases/tag/v10.23.0
@@ -923,6 +943,7 @@ Breaking changes:
 [@hsolberg]: https://github.com/hsolberg
 [@lzandman]: https://github.com/lzandman
 [@engin0223]: https://github.com/engin0223
+[@zachbowden]: https://github.com/zachbowden
 
 
 [8ad18b]: https://github.com/gchq/CyberChef/commit/8ad18bc7db6d9ff184ba3518686293a7685bf7b7
@@ -1220,4 +1241,21 @@ Breaking changes:
 [#2273]: https://github.com/gchq/CyberChef/pull/2273
 [#2342]: https://github.com/gchq/CyberChef/pull/2342
 [#1922]: https://github.com/gchq/CyberChef/pull/1922
+[#2379]: https://github.com/gchq/CyberChef/pull/2379
+[#2372]: https://github.com/gchq/CyberChef/pull/2372
+[#2368]: https://github.com/gchq/CyberChef/pull/2368
+[#2370]: https://github.com/gchq/CyberChef/pull/2370
+[#2371]: https://github.com/gchq/CyberChef/pull/2371
+[#2369]: https://github.com/gchq/CyberChef/pull/2369
+[#1882]: https://github.com/gchq/CyberChef/pull/1882
+[#2354]: https://github.com/gchq/CyberChef/pull/2354
+[#2363]: https://github.com/gchq/CyberChef/pull/2363
+[#2364]: https://github.com/gchq/CyberChef/pull/2364
+[#2365]: https://github.com/gchq/CyberChef/pull/2365
+[#2366]: https://github.com/gchq/CyberChef/pull/2366
+[#2367]: https://github.com/gchq/CyberChef/pull/2367
+[#2361]: https://github.com/gchq/CyberChef/pull/2361
+[#2332]: https://github.com/gchq/CyberChef/pull/2332
+[#2353]: https://github.com/gchq/CyberChef/pull/2353
+[#2351]: https://github.com/gchq/CyberChef/pull/2351
 
