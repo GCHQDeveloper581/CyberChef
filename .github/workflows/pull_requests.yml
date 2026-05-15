@@ -45,6 +45,9 @@ jobs:
           path: build/prod/*.zip
           retention-days: 5
 
+      - name: Setup chromedriver
+        uses: nanasess/setup-chromedriver@c75c3d53d445b96d41dbf2355797b470953c6c30 #v2.4.0
+
       - name: UI Tests
         if: success()
         run: |

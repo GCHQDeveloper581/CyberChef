@@ -46,6 +46,9 @@ jobs:
       - name: Production Build
         run: npx grunt prod
 
+      - name: Setup chromedriver
+        uses: nanasess/setup-chromedriver@c75c3d53d445b96d41dbf2355797b470953c6c30 #v2.4.0
+
       - name: UI Tests
         run: |
           sudo apt-get install xvfb
