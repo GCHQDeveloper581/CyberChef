@@ -46,6 +46,7 @@ jobs:
           retention-days: 5
 
       - name: Setup Chrome
+        id: setup-chrome
         if: success()
         uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2.1.2
         with:
@@ -54,6 +55,7 @@ jobs:
       - name: UI Tests
         if: success()
         run: |
+          export PATH=`dirname ${{ steps.setup-chrome.outputs.chrome-path }}`:$PATH
           sudo apt-get install xvfb
           xvfb-run --server-args="-screen 0 1200x800x24" npx grunt testui
 
