@@ -1,0 +1,144 @@
+name: CLA Stale PR Closer
+
+on:
+  schedule:
+    # Runs daily at 02:00 UTC. Adjust as required.
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Log actions without applying them'
+        type: boolean
+        default: false
+
+permissions:
+  pull-requests: write
+  issues: write
+  contents: read
+
+jobs:
+  close-stale:
+    runs-on: ubuntu-latest
+    env:
+      AWAITING_LABEL: 'awaiting cla'
+
+      # --- Configurable intervals (in days) ---
+      # interval 1: days of inactivity before the warning comment is posted
+      WARN_AFTER_DAYS: '14'
+      # interval 2: days after the warning before the PR is closed
+      CLOSE_AFTER_DAYS: '14'
+
+      # --- Detection config (keep in sync with cla-label.yml) ---
+      CLA_BOT_LOGINS: 'CLAassistant,cla-assistant[bot],github-actions[bot]'
+      NOT_SIGNED_REGEX: 'have not signed|has not signed|please sign|we need.*sign|\[ \]'
+      SIGNED_REGEX: 'all committers have signed|all contributors have signed|has signed the cla|have signed the cla'
+
+      # A unique marker so we only post the warning once and can find it later.
+      WARN_MARKER: '<!-- cla-auto-close-warning -->'
+      CLOSE_MARKER: '<!-- cla-auto-close-closed -->'
+
+    steps:
+      - name: Process open PRs awaiting CLA
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const AWAITING_LABEL = process.env.AWAITING_LABEL;
+            const WARN_AFTER_DAYS = parseInt(process.env.WARN_AFTER_DAYS, 10);
+            const CLOSE_AFTER_DAYS = parseInt(process.env.CLOSE_AFTER_DAYS, 10);
+            const WARN_MARKER = process.env.WARN_MARKER;
+            const CLOSE_MARKER = process.env.CLOSE_MARKER;
+            const dryRun = context.payload.inputs?.dry_run === 'true'
+                        || context.payload.inputs?.dry_run === true;
+
+            const botLogins = process.env.CLA_BOT_LOGINS.split(',').map(s => s.trim().toLowerCase());
+            const notSigned = new RegExp(process.env.NOT_SIGNED_REGEX, 'i');
+            const signed = new RegExp(process.env.SIGNED_REGEX, 'i');
+
+            const DAY_MS = 24 * 60 * 60 * 1000;
+            const now = Date.now();
+
+            const daysBetween = (fromIso) => (now - new Date(fromIso).getTime()) / DAY_MS;
+
+            // Fetch all open PRs. (We check the label per-PR to keep it robust
+            // even if the label sync workflow lagged.)
+            const prs = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: 'open', per_page: 100,
+            });
+
+            core.info(`Scanning ${prs.length} open PR(s). dryRun=${dryRun}`);
+
+            for (const pr of prs) {
+              const num = pr.number;
+
+              const hasLabel = pr.labels.some(l =>
+                (typeof l === 'string' ? l : l.name) === AWAITING_LABEL
+              );
+              if (!hasLabel) continue;
+
+              // Load comments to (a) re-confirm CLA state and (b) find our marker.
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner, repo, issue_number: num, per_page: 100,
+              });
+
+              // Re-confirm the CLA is genuinely still unsigned, to avoid closing
+              // a PR where the label sync simply hasn't caught up.
+              const claComments = comments.filter(c =>
+                botLogins.includes((c.user?.login || '').toLowerCase()) &&
+                (notSigned.test(c.body) || signed.test(c.body))
+              );
+              if (claComments.length > 0) {
+                const latest = claComments[claComments.length - 1];
+                const isSigned = signed.test(latest.body) && !notSigned.test(latest.body);
+                if (isSigned) {
+                  core.info(`PR #${num}: CLA appears signed; skipping (label sync will remove it).`);
+                  continue;
+                }
+              }
+
+              // Find our previously posted warning, if any.
+              const warnComment = comments.find(c => (c.body || '').includes(WARN_MARKER));
+
+              if (!warnComment) {
+                // No warning yet — check whether we've passed interval 1.
+                // "Age" is measured from the PR creation date. Swap for
+                // pr.updated_at if you prefer inactivity-based timing.
+                const ageDays = daysBetween(pr.created_at);
+                if (ageDays >= WARN_AFTER_DAYS) {
+                  const body =
+                    `${WARN_MARKER}\n` +
+                    `⚠️ This PR will be automatically closed if the CLA is not ` +
+                    `signed within ${CLOSE_AFTER_DAYS} days.`;
+                  core.info(`PR #${num}: posting warning (age ${ageDays.toFixed(1)}d).`);
+                  if (!dryRun) {
+                    await github.rest.issues.createComment({
+                      owner, repo, issue_number: num, body,
+                    });
+                  }
+                } else {
+                  core.info(`PR #${num}: below warn threshold (age ${ageDays.toFixed(1)}d).`);
+                }
+                continue;
+              }
+
+              // Warning already posted — check whether interval 2 has elapsed.
+              const sinceWarnDays = daysBetween(warnComment.created_at);
+              if (sinceWarnDays >= CLOSE_AFTER_DAYS) {
+                core.info(`PR #${num}: closing (warned ${sinceWarnDays.toFixed(1)}d ago).`);
+                if (!dryRun) {
+                  await github.rest.issues.createComment({
+                    owner, repo, issue_number: num,
+                    body:
+                      `${CLOSE_MARKER}\n` +
+                      `This PR has been automatically closed as the CLA has not ` +
+                      `been signed. We are happy to have it reopened if the CLA ` +
+                      `is signed subsequently.`,
+                  });
+                  await github.rest.pulls.update({
+                    owner, repo, pull_number: num, state: 'closed',
+                  });
+                }
+              } else {
+                core.info(`PR #${num}: warned but grace period not elapsed (${sinceWarnDays.toFixed(1)}/${CLOSE_AFTER_DAYS}d).`);
+              }
+            }
