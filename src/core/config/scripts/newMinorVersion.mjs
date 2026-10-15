@@ -62,7 +62,7 @@ async function main() {
     const features = [];
 
     const commits = await (
-        await fetch(`https://api.github.com/repos/GCHQDeveloper581/cyberchef/commits`)
+        await fetch(`https://api.github.com/repos/GCHQDeveloper581/cyberchef/commits?per_page=100`)
     ).json();
     let foundLast = false;
     for (const commit of commits) {
