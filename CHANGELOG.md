@@ -13,6 +13,40 @@ All major and minor version changes will be documented in this file. Details of 
 
 ## Details
 
+### [11.6.0] - 2026-10-15
+- Merge pull request #69 from GCHQDeveloper581/copilot/minor-version-update-workflow [@GCHQDeveloper581] | [#]
+- Update fetch URL to include per_page parameter [@GCHQDeveloper581] | [#]
+- Merge pull request #67 from GCHQDeveloper581/copilot/minor-version-update-workflow [@GCHQDeveloper581] | [#]
+- Update GitHub repository URL for commits fetch [@GCHQDeveloper581] | [#]
+- Merge pull request #65 from GCHQDeveloper581/copilot/minor-version-update-workflow [@GCHQDeveloper581] | [#]
+- Apply remaining changes [@Copilot] [@GCHQDeveloper581] | [#]
+- Fetch full history and tags in minor version workflow [@Copilot] [@GCHQDeveloper581] | [#]
+- Merge pull request #62 from GCHQDeveloper581/copilot/minor-version-update-workflow [@GCHQDeveloper581] | [#]
+- Apply remaining changes [@Copilot] [@GCHQDeveloper581] | [#]
+- Apply remaining changes [@Copilot] [@GCHQDeveloper581] | [#]
+- chore (deps): bump source-map-js from 1.2.1 to 1.2.2  | [#2881]
+- chore (deps): bump shell-quote from 1.10.0 to 1.12.0  | [#2880]
+- chore (deps): bump handlebars from 4.7.9 to 4.7.10  | [#2879]
+- chore (deps): bump brace-expansion from 5.0.9 to 5.0.12  | [#2869]
+- chore (deps): bump morgan from 1.12.0 to 1.12.1  | [#2868]
+- chore (deps): bump ip-address from 10.4.0 to 10.7.3  | [#2867]
+- chore (deps): bump the patch-updates group with 3 updates  | [#2863]
+- chore (deps): bump sql-formatter from 15.8.2 to 15.9.0 in the minor-updates group  | [#2864]
+- chore (deps): bump piscina from 4.9.3 to 4.9.4  | [#2866]
+- Add drag drop browser tests [@lzandman] | [#2795]
+- fix: show error when too many ingredient values are provided [@bartvanandel] [@GCHQDeveloper581] | [#2711]
+- feat: add X.509 certificate bundle parsing [@sollie] | [#2853]
+- chore (deps): bump the patch-updates group across 1 directory with 7 updates  | [#2854]
+- chore (deps): bump the actions-dependencies group with 3 updates  | [#2849]
+- chore (deps): bump node from `e67514e` to `ebfe2f9` in the docker-dependencies group  | [#2848]
+- chore (deps): bump webpack-bundle-analyzer from 5.3.3 to 5.4.0 in the minor-updates group  | [#2851]
+- Report byte offsets for Protobuf decode errors [@sylvesterkaczmarek] | [#2834]
+- Apply npm audit fix (non-breaking security updates) [@nipunhsud] [@nipunhsud] | [#2841]
+- security: upgrade webpack-dev-server 5 -> 6 (moderate advisory) [@nipunhsud] [@nipunhsud] | [#2840]
+- chore (deps): bump the patch-updates group across 1 directory with 12 updates  | [#2843]
+- chore (deps): bump the minor-updates group across 1 directory with 2 updates  | [#2844]
+- Task/awaiting response label [@alleria173] | [#2647]
+
 ### [11.5.0] - 2026-09-18
 This release includes a security fix
 - SECURITY: prevent autobake on loaded recipe if any operation has manualBake set [@GCHQDeveloper581] | [b603905]
@@ -856,6 +890,7 @@ Breaking changes:
 ## [4.0.0] - 2016-11-28
 -  Initial open source commit [@n1474335] | [b1d73a72](https://github.com/gchq/CyberChef/commit/b1d73a725dc7ab9fb7eb789296efd2b7e4b08306)
 
+[11.6.0]: https://github.com/gchq/CyberChef/releases/tag/v11.6.0
 [11.5.0]: https://github.com/gchq/CyberChef/releases/tag/v11.5.0
 [11.4.0]: https://github.com/gchq/CyberChef/releases/tag/v11.4.0
 [11.3.0]: https://github.com/gchq/CyberChef/releases/tag/v11.3.0
@@ -1180,6 +1215,9 @@ Breaking changes:
 [@evan-cohen]: https://github.com/evan-cohen
 [@n0liu]: https://github.com/n0liu
 [@arjun2075]: https://github.com/arjun2075
+[@Copilot]: https://github.com/Copilot
+[@sollie]: https://github.com/sollie
+[@nipunhsud]: https://github.com/nipunhsud
 
 
 [8ad18b]: https://github.com/gchq/CyberChef/commit/8ad18bc7db6d9ff184ba3518686293a7685bf7b7
@@ -1645,3 +1683,5 @@ Breaking changes:
 [#2686]: https://github.com/gchq/CyberChef/pull/2686
 [#2685]: https://github.com/gchq/CyberChef/pull/2685
 [#2684]: https://github.com/gchq/CyberChef/pull/2684
+[#]: https://github.com/gchq/CyberChef/pull/
+
